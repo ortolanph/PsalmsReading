@@ -2,13 +2,16 @@ package org.psalms.services;
 
 import org.psalms.entities.Psalm;
 import org.psalms.repositories.PsalmRepository;
+import org.psalms.utils.CSVPsalmFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class PsalmsService {
@@ -62,13 +65,22 @@ public class PsalmsService {
     }
 
     public List<Psalm> uploadFileContents(byte[] bytes) {
+        List<Psalm> psalms = new ArrayList<>();
+
+        CSVPsalmFunction csvPsalmFunction = new CSVPsalmFunction();
         try {
             List<String> lines = Files.readAllLines(Files.createTempFile("upload", "csv"));
 
+            psalms = lines
+                    .stream()
+                    .map(p -> p.split(","))
+                    .map(csvPsalmFunction)
+                    .collect(Collectors.toList());
 
+            repository.saveAll(psalms);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return psalms;
     }
 }
