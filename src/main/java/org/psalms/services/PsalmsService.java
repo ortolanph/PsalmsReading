@@ -3,11 +3,11 @@ package org.psalms.services;
 import org.psalms.entities.Psalm;
 import org.psalms.repositories.PsalmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Component
+@Service
 public class PsalmsService {
 
     @Autowired
@@ -21,12 +21,12 @@ public class PsalmsService {
         return repository.findAll();
     }
 
-    public Psalm getById(long id) {
-        return repository.findById(id).get();
+    public Psalm getByNumber(int number) {
+        return repository.findByPsalmNumber(number);
     }
 
-    public int planReading(long id) {
-        Psalm psalm = repository.findById(id).get();
+    public int planReading(int number) {
+        Psalm psalm = repository.findByPsalmNumber(number);
 
         psalm.readingOrder = repository.cuurentReadingOrder() + 1;
         repository.save(psalm);
@@ -34,19 +34,27 @@ public class PsalmsService {
         return psalm.readingOrder;
     }
 
-    public Psalm markAsRead(long id) {
-        Psalm psalm = repository.findById(id).get();
+    public Psalm markAsRead(int number) {
+        Psalm psalm = repository.findByPsalmNumber(number);
 
         psalm.read = true;
 
         return repository.save(psalm);
     }
 
-    public long nextUnreadPsalm() {
-        return remainingPsalms().get(0).id;
+    public int nextUnreadPsalm() {
+        return remainingPsalms().get(0).psalmNumber;
     }
 
     public List<Psalm> remainingPsalms() {
         return repository.remainingPsalms();
+    }
+
+    public List<Psalm> unread() {
+        return repository.unread();
+    }
+
+    public List<Psalm> unplanned() {
+        return repository.unplanned();
     }
 }

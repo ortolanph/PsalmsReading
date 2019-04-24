@@ -25,27 +25,27 @@ public class PsalmController {
         return service.getAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{number}")
     public @ResponseBody
-    Psalm getPsalmById(@RequestParam long id) {
-        return service.getById(id);
+    Psalm getPsalmByNumber(@PathVariable("number") int number) {
+        return service.getByNumber(number);
     }
 
-    @GetMapping("/{id}/plan")
+    @GetMapping("/{number}/plan")
     public @ResponseBody
-    int planReading(@RequestParam long id) {
-        return service.planReading(id);
+    int planReading(@PathVariable("number") int number) {
+        return service.planReading(number);
     }
 
-    @GetMapping("/{id}/read")
+    @GetMapping("/{number}/read")
     public @ResponseBody
-    Psalm markAsRead(@RequestParam long id) {
-        return service.markAsRead(id);
+    Psalm markAsRead(@PathVariable("number") int number) {
+        return service.markAsRead(number);
     }
 
     @GetMapping("/next")
     public @ResponseBody
-    long nextUnreadPsalm() {
+    int nextUnreadPsalm() {
         return service.nextUnreadPsalm();
     }
 
@@ -53,5 +53,17 @@ public class PsalmController {
     public @ResponseBody
     List<Psalm> remainingPsalmsInOrder() {
         return service.remainingPsalms();
+    }
+
+    @GetMapping("/unread")
+    public @ResponseBody
+    List<Psalm> unread() {
+        return service.unread();
+    }
+
+    @GetMapping("/unplanned")
+    public @ResponseBody
+    List<Psalm> unplanned() {
+        return service.unplanned();
     }
 }
