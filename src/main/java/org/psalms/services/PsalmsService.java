@@ -5,6 +5,9 @@ import org.psalms.repositories.PsalmRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 @Service
@@ -56,5 +59,16 @@ public class PsalmsService {
 
     public List<Psalm> unplanned() {
         return repository.unplanned();
+    }
+
+    public List<Psalm> uploadFileContents(byte[] bytes) {
+        try {
+            List<String> lines = Files.readAllLines(Files.createTempFile("upload", "csv"));
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
