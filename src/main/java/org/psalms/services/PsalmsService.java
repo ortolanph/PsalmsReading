@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -67,7 +64,7 @@ public class PsalmsService {
         return repository.unplanned();
     }
 
-    public List<Psalm> uploadFileContents(byte[] bytes)  {
+    public List<Psalm> uploadFileContents(byte[] bytes) {
         List<Psalm> psalms = new ArrayList<>();
 
         CSVPsalmFunction csvPsalmFunction = new CSVPsalmFunction();
