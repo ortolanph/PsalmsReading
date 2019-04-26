@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 source environments/development.conf
+source ~/settings.conf
 
 java -Dserver.port=$PORT \
      -Dspring.profiles.active=$PROFILE \

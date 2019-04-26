@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Salmo #reference</title>
+        <meta charset="UTF-8"/>
+        <style>
+            body {
+                font-family: sans-serif;
+            }
+        </style>
+    </head>
+    <body>
+        <h1><strong>#reference</strong></h1>
+        <ol>
+            #foreach( $verse in $verses )
+                <li>$verse.text</li>
+            #end
+        </ol>
+    </body>
+</html>
