@@ -29,6 +29,8 @@ public class PsalmSender {
         }
 
         // send it to subscribers (https://www.baeldung.com/spring-email)
+        // https://www.baeldung.com/spring-mvc-with-velocity
+        // https://www.baeldung.com/apache-velocity
     }
 
 }
