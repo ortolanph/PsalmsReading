@@ -6,7 +6,10 @@ import org.psalms.utils.CSVPsalmFunction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -64,23 +67,22 @@ public class PsalmsService {
         return repository.unplanned();
     }
 
-    public List<Psalm> uploadFileContents(byte[] bytes) {
+    public List<Psalm> uploadFileContents(byte[] bytes)  {
         List<Psalm> psalms = new ArrayList<>();
 
         CSVPsalmFunction csvPsalmFunction = new CSVPsalmFunction();
-        try {
-            List<String> lines = Files.readAllLines(Files.createTempFile("upload", "csv"));
+        ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(bais));
 
-            psalms = lines
-                    .stream()
-                    .map(p -> p.split(","))
-                    .map(csvPsalmFunction)
-                    .collect(Collectors.toList());
+        List<String> lines = reader.lines().collect(Collectors.toList());
 
-            repository.saveAll(psalms);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        psalms = lines
+                .stream()
+                .map(p -> p.split(","))
+                .map(csvPsalmFunction)
+                .collect(Collectors.toList());
+
+        repository.saveAll(psalms);
         return psalms;
     }
 }
