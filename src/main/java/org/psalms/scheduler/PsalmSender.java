@@ -17,7 +17,7 @@ public class PsalmSender {
     private BibleAPIService bibleAPIService;
 
     //    @Scheduled(cron = "0 0 8 * * *")
-    @Scheduled(cron = "0 */2 * * * *")
+    //@Scheduled(cron = "0 */2 * * * *")
     public void sendDailyPsalm() {
         int nextUnreadPsalm = psalmsService.nextUnreadPsalm();
 
