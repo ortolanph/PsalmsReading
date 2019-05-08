@@ -19,5 +19,4 @@ public class Psalm {
     @Column(name = "read")
     public boolean read;
 
-
 }
